@@ -1,0 +1,20 @@
+﻿@model IEnumerable<Cinema.Models.Genre>
+
+<h2>Genre List</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Movies</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var genre in Model)
+        {
+            <tr>
+                <td>@genre.Name</td>
+                <td>@string.Join(", ",genre.Movies.Select(m=>m.Title).ToList())</td>                
+            </tr>
+        }
+    </tbody>
+</table>
