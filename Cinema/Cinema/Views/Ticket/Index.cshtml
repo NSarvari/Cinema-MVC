@@ -1,0 +1,26 @@
+﻿@model IEnumerable<Cinema.Models.Ticket>
+
+<h2>Tickets List</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Number</th>
+            <th>Movie</th>
+            <th>Visitor</th>
+            <th>Place</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var ticket in Model)
+        {
+            <tr>
+                <td>@ticket.Number</td>
+                <td>@ticket.Movie.Title</td>
+                <td>@ticket.Visitor.Name</td>
+                <td>@ticket.Place.Number</td>
+                <td>@ticket.Price</td>
+            </tr>
+        }
+    </tbody>
+</table>
