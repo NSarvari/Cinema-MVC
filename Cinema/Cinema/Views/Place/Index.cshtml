@@ -1,0 +1,20 @@
+﻿@model IEnumerable<Cinema.Models.Place>
+
+<h2>Places List</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Number</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var place in Model)
+        {
+            <tr>
+                <td>@place.Number</td>
+                <td>@place.Price</td>
+            </tr>
+        }
+    </tbody>
+</table>
