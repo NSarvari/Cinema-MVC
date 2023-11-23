@@ -1,10 +1,10 @@
 ﻿@model Cinema.Models.Genre
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
 }
 
-<h2>Create Genre</h2>
-<form method="post" asp-action="Add" asp-controller="Genre">
+<h2>Edit Genre</h2>
+<form method="post" asp-action="Edit" asp-controller="Genre">
     <div class="form-group">
         <label asp-for="Name"></label>
         <input asp-for="Name" class="form-control" />
@@ -15,5 +15,5 @@
                class="form-control" />
     </div>
 
-    <button type="submit" class="btn btn-primary">Create</button>
+    <button type="submit" class="btn btn-primary">Update</button>
 </form>

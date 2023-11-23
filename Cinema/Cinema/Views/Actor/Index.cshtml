@@ -1,0 +1,31 @@
+﻿@model IEnumerable<Cinema.Models.Actor>
+
+<h2>Movies List</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Birth Date</th>
+            <th>Nationality</th>
+            <th>Movies</th>
+            <th>IMDB Rating</th>
+            <th>Photo</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var actor in Model)
+        {
+            <tr>
+                <td>@actor.FirstName</td>
+                <td>@actor.LastName</td>
+                <td>@actor.BirthDate</td>
+                <td>@actor.Nationality</td>
+                <td>@string.Join(", ",actor.MovieActors
+                .Select(m=>m.Movie.Title).ToList())</td>
+                <td>@actor.ImdbRating</td>
+                <td><img src="@actor.Photo" alt="@actor.FirstName" /></td>
+               </tr>
+        }
+    </tbody>
+</table>

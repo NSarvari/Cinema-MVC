@@ -1,0 +1,47 @@
+﻿@model Cinema.Models.Movie
+
+<h2>Edit Movie</h2>
+<form asp-action="Edit">
+    <div class="form-control">
+        <label asp-for="Title" class="form-label"></label>
+        <input asp-for="Title" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Genre"></label>
+        <select asp-for="Genre" asp-items="@(new SelectList(ViewBag.Genres,"Title"))"
+                class="form-control"></select>
+    </div>
+    <div class="form-group">
+        <label asp-for="MovieActors"></label>
+        <select asp-for="MovieActors"
+                asp-items="@(new SelectList(ViewBag.Actors,"FirstName","LastName"))"
+                class="form-control"></select>
+    </div>
+    <div class="form-group">
+        <label asp-for="Poster" class="form-label"></label>
+        <input asp-for="Poster" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Plot" class="form-label"></label>
+        <input asp-for="Plot" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="VisitorRating" class="form-label"></label>
+        <input asp-for="VisitorRating" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="ProjectionWeek" class="form-label"></label>
+        <input asp-for="ProjectionWeek" type="date" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Price" class="form-label"></label>
+        <input asp-for="Price" type="date" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Tickets"></label>
+        <input asp-for="Tickets" asp-items=
+        "@(new SelectList(ViewBag.Tickets,"Number"))"
+               class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary" asp-controller="Movie">Update</button>
+</form>
