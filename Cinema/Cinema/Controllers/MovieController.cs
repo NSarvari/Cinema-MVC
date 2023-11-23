@@ -25,6 +25,7 @@ namespace Cinema.Controllers
             return View(movies);
         }
 
+        //Add Movie
         public IActionResult Add()
         {
             ViewBag.Genres = context.Genres.ToList();
@@ -41,6 +42,39 @@ namespace Cinema.Controllers
             context.Movies.Add(movie);
             context.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        //Update Movie
+        public IActionResult Edit(int id)
+        {
+            var movie = context.Movies
+                .Include (m => m.Genre)
+                .Include(m => m.MovieActors)
+                .Include(m => m.Tickets)
+                .FirstOrDefault(m=>m.Id==id);
+            if (movie == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.Genres = context.Genres.ToList();
+            ViewBag.Actors = context.MovieActors.Include
+                (ma => ma.Actor).ToList();
+            ViewBag.Tickets = context.Tickets.ToList();
+            
+            return View(movie);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Movie movie)
+        {
+            if (ModelState.IsValid)
+            {
+                context.Movies.Update(movie);
+                context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(movie);
         }
     }
 }
