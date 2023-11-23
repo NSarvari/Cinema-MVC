@@ -41,5 +41,37 @@ namespace Cinema.Controllers
             context.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        //Update Ticket
+        public IActionResult Edit(int id)
+        {
+            var ticket = context.Tickets
+                .Include(m => m.Movie)
+                .Include(m => m.Visitor)
+                .Include(m => m.Place)
+                .FirstOrDefault(m => m.Id == id);
+            if (ticket == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.Movies = context.Movies.ToList();
+            ViewBag.Visitors = context.Visitors.ToList();
+            ViewBag.Places = context.Places.ToList();
+
+            return View(ticket);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Ticket ticket)
+        {
+            if (ModelState.IsValid)
+            {
+                context.Tickets.Update(ticket);
+                context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(ticket);
+        }
     }
 }

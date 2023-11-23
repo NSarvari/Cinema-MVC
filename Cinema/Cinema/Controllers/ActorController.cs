@@ -5,64 +5,68 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Cinema.Controllers
 {
-    public class GenreController : Controller
+    public class ActorController : Controller
     {
         private readonly ApplicationDbContext context;
 
-        public GenreController(ApplicationDbContext context)
+        public ActorController(ApplicationDbContext context)
         {
             this.context = context;
         }
 
         public IActionResult Index()
         {
-            var genres = context.Genres
-            .Include(m => m.Movies).ToList();
+            var actor = context.Actors
+            .Include(m => m.MovieActors)
+            .ToList();
 
-            return View(genres);
+            return View(actor);
         }
 
+        //Add Actor
         public IActionResult Add()
         {
-            ViewBag.Movies = context.Movies.ToList();
+            ViewBag.Movies = context.MovieActors.Include
+                (ma => ma.Movie).ToList();
 
             return View();
         }
 
         [HttpPost]
-        public IActionResult Add(Genre genre)
+        public IActionResult Add(Actor actor)
         {
-            context.Genres.Add(genre);
+            context.Actors.Add(actor);
             context.SaveChanges();
             return RedirectToAction("Index");
         }
 
-        //Update Genre
+        //Update Actor
         public IActionResult Edit(int id)
         {
-            var genre = context.Genres
-                .Include(m => m.Movies)
+            var actor = context.Actors
+                .Include(m => m.MovieActors)
                 .FirstOrDefault(m => m.Id == id);
-            if (genre == null)
+            if (actor == null)
             {
                 return NotFound();
             }
 
-            ViewBag.Movies = context.Movies.ToList();
+            ViewBag.Movies = context.MovieActors.Include
+                (ma => ma.Movie).ToList();
 
-            return View(genre);
+            return View(actor);
         }
 
         [HttpPost]
-        public IActionResult Edit(Genre genre)
+        public IActionResult Edit(Actor actor)
         {
             if (ModelState.IsValid)
             {
-                context.Genres.Update(genre);
+                context.Actors.Update(actor);
                 context.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(genre);
+            return View(actor);
         }
     }
 }
