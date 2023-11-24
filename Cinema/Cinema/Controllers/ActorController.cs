@@ -18,6 +18,7 @@ namespace Cinema.Controllers
         {
             var actor = context.Actors
             .Include(m => m.MovieActors)
+            .ThenInclude(m=>m.Movie)
             .ToList();
 
             return View(actor);
