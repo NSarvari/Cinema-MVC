@@ -8,9 +8,10 @@
             <th>Last Name</th>
             <th>Birth Date</th>
             <th>Nationality</th>
-            <th>Movies</th>
+            @*<th>Movies</th>*@
             <th>IMDB Rating</th>
             <th>Photo</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -21,11 +22,22 @@
                 <td>@actor.LastName</td>
                 <td>@actor.BirthDate</td>
                 <td>@actor.Nationality</td>
-                <td>@string.Join(", ",actor.MovieActors
-                .Select(m=>m.Movie.Title).ToList())</td>
+       @*         <td>
+                    @string.Join(", ",actor.MovieActors
+                .Select(m=>m.Movie.Title).ToList())
+                </td>*@
                 <td>@actor.ImdbRating</td>
                 <td><img src="@actor.Photo" alt="@actor.FirstName" /></td>
-               </tr>
+
+                <td>
+                    <a asp-action="Edit" asp-route-id="@actor.Id" class="btn btn-primary">Edit</a>
+                    <form asp-action="Delete" asp-route-id="@actor.Id" method="post"
+                          onsubmit="return confirm('Are you sure you want to delete this actor?');">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
         }
     </tbody>
 </table>
+<a asp-action="Add" asp-controller="Actor" class="btn btn-success">Add New Actor</a>

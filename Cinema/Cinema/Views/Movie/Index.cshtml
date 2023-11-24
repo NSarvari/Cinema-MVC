@@ -6,13 +6,14 @@
         <tr>
             <th>Title</th>
             <th>Genre</th>
-            <th>Actors</th>
+            @*<th>Actors</th>*@
             <th>Poster</th>
             <th>Plot</th>
             <th>Visitor Rating</th>
             <th>Projection Week</th>
             <th>Price</th>
-            <th>Tickets</th>
+            @*<th>Tickets</th>*@
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -21,16 +22,24 @@
             <tr>
                 <td>@movie.Title</td>
                 <td>@movie.Genre.Name</td>
-                <td>@string.Join(", ",movie.MovieActors
-                .Select(a=>a.Actor.FirstName+" "+a.Actor.LastName)
-                .ToList())</td>
+                @*     <td>@string.Join(", ",movie.MovieActors
+            .Select(a=>a.Actor.FirstName)
+            .ToList())</td>*@
                 <td><img src="@movie.Poster" alt="@movie.Title" /></td>
                 <td>@movie.Plot</td>
                 <td>@movie.VisitorRating</td>
                 <td>@movie.ProjectionWeek</td>
                 <td>@movie.Price</td>
-                <td>@string.Join(", ",movie.Tickets.Select
-                (t=>t.Number).ToList())</td>
+                @*      <td>@string.Join(", ",movie.Tickets.Select
+            (t=>t.Number).ToList())</td>*@
+                <td>
+                    <a asp-action="Edit" asp-route-id="@movie.Id"
+                    class="btn btn-primary">Edit</a>
+                    <form asp-action="Delete" asp-route-id="@movie.Id" method="post"
+                          onsubmit="return confirm('Are you sure you want to delete this movie?');">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
             </tr>
         }
     </tbody>

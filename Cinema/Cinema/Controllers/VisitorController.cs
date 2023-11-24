@@ -66,5 +66,21 @@ namespace Cinema.Controllers
             }
             return View(visitor);
         }
+
+
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            var visitor = context.Visitors.Find(id);
+
+            if (visitor == null)
+            {
+                return NotFound();
+            }
+
+            context.Visitors.Remove(visitor);
+            context.SaveChanges();
+            return RedirectToAction("Index");
+        }
     }
 }

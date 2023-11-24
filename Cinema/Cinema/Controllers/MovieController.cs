@@ -68,13 +68,24 @@ namespace Cinema.Controllers
         [HttpPost]
         public IActionResult Edit(Movie movie)
         {
-            if (ModelState.IsValid)
-            {
                 context.Movies.Update(movie);
                 context.SaveChanges();
                 return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            var movie = context.Movies.Find(id);
+
+            if (movie == null)
+            {
+                return NotFound();
             }
-            return View(movie);
+
+            context.Movies.Remove(movie);
+            context.SaveChanges();
+            return RedirectToAction("Index");
         }
     }
 }

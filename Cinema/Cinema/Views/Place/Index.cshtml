@@ -6,6 +6,7 @@
         <tr>
             <th>Number</th>
             <th>Price</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -14,6 +15,14 @@
             <tr>
                 <td>@place.Number</td>
                 <td>@place.Price</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@place.Id"
+                       class="btn btn-primary">Edit</a>
+                    <form asp-action="Delete" asp-route-id="@place.Id" method="post"
+                          onsubmit="return confirm('Are you sure you want to delete this place?');">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
             </tr>
         }
     </tbody>
