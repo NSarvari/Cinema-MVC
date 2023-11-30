@@ -10,19 +10,16 @@
         <input asp-for="Number" class="form-control" />
     </div>
     <div class="form-group">
-        <label asp-for="Movie"></label>
-        <input asp-for="Movie" asp-items="@(new SelectList(ViewBag.Movies,"Title"))"
-               class="form-control" />
+        <label asp-for="MovieId"></label>
+        <input asp-for="MovieId" class="form-control" />
     </div>
     <div class="form-group">
-        <label asp-for="Visitor"></label>
-        <input asp-for="Visitor" asp-items="@(new SelectList(ViewBag.Visitors,"Name"))"
-               class="form-control" />
+        <label asp-for="VisitorId"></label>
+        <input asp-for="VisitorId" class="form-control" />
     </div>
     <div class="form-group">
-        <label asp-for="Place"></label>
-        <input asp-for="Place" asp-items="@(new SelectList(ViewBag.Places,"Number"))"
-               class="form-control" />
+        <label asp-for="PlaceId"></label>
+        <input asp-for="PlaceId" class="form-control" />
     </div>
     <div class="form-group">
         <label asp-for="Price"></label>

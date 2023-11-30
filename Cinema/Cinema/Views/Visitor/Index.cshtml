@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<Cinema.Models.Visitor>
 
-<h2>Tickets List</h2>
+<h2>Visitors List</h2>
 <table class="table">
     <thead>
         <tr>
@@ -16,6 +16,8 @@
             <tr>
                 <td>@visitor.Name</td>
                 <td>@visitor.Email</td>
+                <td>@string.Join(", ",visitor.Tickets.Select(m=>m.Number).ToList())
+                </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@visitor.Id"
                        class="btn btn-primary">Edit</a>

@@ -4,7 +4,7 @@
 }
 
 <h2>Create Visitor</h2>
-<form method="post" asp-action="Edit" asp-controller="Visitor">
+<form method="post" asp-action="Add" asp-controller="Visitor">
     <div class="form-group">
         <label asp-for="Name"></label>
         <input asp-for="Name" class="form-control" />
@@ -12,11 +12,6 @@
     <div class="form-group">
         <label asp-for="Email"></label>
         <input asp-for="Email" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label asp-for="Tickets"></label>
-        <input asp-for="Tickets" asp-items="@(new SelectList(ViewBag.Tickets,"Number"))"
-               class="form-control" />
     </div>
 
     <button type="submit" class="btn btn-primary">Add</button>

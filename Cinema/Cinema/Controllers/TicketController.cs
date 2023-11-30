@@ -65,13 +65,10 @@ namespace Cinema.Controllers
         [HttpPost]
         public IActionResult Edit(Ticket ticket)
         {
-            if (ModelState.IsValid)
-            {
-                context.Tickets.Update(ticket);
-                context.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(ticket);
+
+            context.Tickets.Update(ticket);
+            context.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
