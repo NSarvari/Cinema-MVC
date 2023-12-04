@@ -13,6 +13,11 @@
         <label asp-for="Email"></label>
         <input asp-for="Email" class="form-control" />
     </div>
-
+    <div class="form-group">
+        <label asp-for="Tickets"></label>
+        <select asp-for="Tickets" asp-items="@(new SelectList(ViewBag.Tickets, "Id", "Number"))" class="form-control">
+            <option value="">Select a ticket</option>
+        </select>
+    </div>
     <button type="submit" class="btn btn-primary">Update</button>
 </form>

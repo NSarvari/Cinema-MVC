@@ -11,15 +11,21 @@
     </div>
     <div class="form-group">
         <label asp-for="MovieId"></label>
-        <input asp-for="MovieId" class="form-control" />
+        <select asp-for="MovieId" asp-items="@(new SelectList(ViewBag.Movies, "Id", "Title"))" class="form-control">
+            <option value="">Select a movie</option>
+        </select>
     </div>
     <div class="form-group">
         <label asp-for="VisitorId"></label>
-        <input asp-for="VisitorId" class="form-control" />
+        <select asp-for="VisitorId" asp-items="@(new SelectList(ViewBag.Visitors, "Id", "Name"))" class="form-control">
+            <option value="">Select a visitor</option>
+        </select>
     </div>
     <div class="form-group">
         <label asp-for="PlaceId"></label>
-        <input asp-for="PlaceId" class="form-control" />
+        <select asp-for="PlaceId" asp-items="@(new SelectList(ViewBag.Places, "Id", "Number"))" class="form-control">
+            <option value="">Select a place</option>
+        </select>
     </div>
     <div class="form-group">
         <label asp-for="Price"></label>

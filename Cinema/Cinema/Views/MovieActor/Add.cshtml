@@ -6,12 +6,16 @@
 <h2>Create Movie-Actor Relation</h2>
 <form method="post" asp-action="Add" asp-controller="MovieActor">
     <div class="form-group">
-        <label asp-for="MovieId"></label>
-        <input asp-for="MovieId" class="form-control" />
+        <label asp-for="Movie"></label>
+        <select asp-for="MovieId" asp-items="@(new SelectList(ViewBag.Movies, "Id", "Title"))" class="form-control">
+            <option value="">Select a movie</option>
+        </select>
     </div>
     <div class="form-group">
-        <label asp-for="ActorId"></label>
-        <input asp-for="ActorId" class="form-control" />
+        <label asp-for="Actor"></label>
+        <select asp-for="ActorId" asp-items="@(new SelectList(ViewBag.Actors, "Id", "FirstName"))" class="form-control">
+            <option value="">Select a actor</option>
+        </select>
     </div>
 
     <button type="submit" class="btn btn-primary" asp-controller="MovieActor">Create</button>
