@@ -11,7 +11,10 @@
             <th>Movies</th>
             <th>IMDB Rating</th>
             <th>Photo</th>
-            <th>Actions</th>
+            @if (User.IsInRole("Admin"))
+            {
+                <th>Actions</th>
+            }
         </tr>
     </thead>
     <tbody>

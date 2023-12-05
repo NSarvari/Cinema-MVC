@@ -6,7 +6,10 @@
         <tr>
             <th>Number</th>
             <th>Price</th>
-            <th>Actions</th>
+            @if (User.IsInRole("Admin"))
+            {
+                <th>Actions</th>
+            }
         </tr>
     </thead>
     <tbody>

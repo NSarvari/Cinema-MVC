@@ -7,7 +7,10 @@
             <th>Name</th>
             <th>Email</th>
             <th>Ticket</th>
-            <th>Actions</th>
+            @if (User.IsInRole("Admin"))
+            {
+                <th>Actions</th>
+            }
         </tr>
     </thead>
     <tbody>

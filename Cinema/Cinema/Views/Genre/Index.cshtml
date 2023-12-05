@@ -6,7 +6,10 @@
         <tr>
             <th>Name</th>
             <th>Movies</th>
-            <th>Actions</th>
+            @if (User.IsInRole("Admin"))
+            {
+                <th>Actions</th>
+            }
         </tr>
     </thead>
     <tbody>
