@@ -1,10 +1,12 @@
 ﻿using Cinema.Data;
 using Cinema.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cinema.Controllers
 {
+    [Authorize]
     public class GenreController : Controller
     {
         private readonly ApplicationDbContext context;
@@ -22,6 +24,7 @@ namespace Cinema.Controllers
             return View(genres);
         }
 
+        [Authorize(Roles="Admin")]
         public IActionResult Add()
         {
             ViewBag.Movies = context.Movies.ToList();
@@ -38,6 +41,7 @@ namespace Cinema.Controllers
         }
 
         //Update Genre
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(int id)
         {
             var genre = context.Genres
@@ -66,6 +70,7 @@ namespace Cinema.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(int id)
         {
             var genre = context.Genres.Find(id);

@@ -32,17 +32,24 @@
                 <td>@movie.Price</td>
                 @*      <td>@string.Join(", ",movie.Tickets.Select
             (t=>t.Number).ToList())</td>*@
-                <td>
-                    <a asp-action="Edit" asp-route-id="@movie.Id"
-                    class="btn btn-primary">Edit</a>
-                    <form asp-action="Delete" asp-route-id="@movie.Id" method="post"
-                          onsubmit="return confirm('Are you sure you want to delete this movie?');">
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                    </form>
-                </td>
+                @if (User.IsInRole("Admin"))
+                {
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@movie.Id"
+                           class="btn btn-primary">Edit</a>
+                        <form asp-action="Delete" asp-route-id="@movie.Id" method="post"
+                              onsubmit="return confirm('Are you sure you want to delete this movie?');">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
+                }
             </tr>
         }
     </tbody>
 </table>
-<a asp-action="Add" asp-controller="Movie" class="btn btn-success">
-    Add New Movie</a>
+@if (User.IsInRole("Admin"))
+{
+    <a asp-action="Add" asp-controller="Movie" class="btn btn-success">
+        Add New Movie
+    </a>
+}

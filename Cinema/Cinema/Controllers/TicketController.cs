@@ -1,10 +1,12 @@
 ﻿using Cinema.Data;
 using Cinema.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cinema.Controllers
 {
+    [Authorize]
     public class TicketController : Controller
     {
         private readonly ApplicationDbContext context;

@@ -22,4 +22,7 @@
         }
     </tbody>
 </table>
-<a asp-action="Add" asp-controller="MovieActor" class="btn btn-success">Add New Movie-Actor Relations</a>
+@if (User.IsInRole("Admin"))
+{
+    <a asp-action="Add" asp-controller="MovieActor" class="btn btn-success">Add New Movie-Actor Relations</a>
+}

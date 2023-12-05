@@ -1,10 +1,12 @@
 ﻿using Cinema.Data;
 using Cinema.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cinema.Controllers
 {
+    [Authorize]
     public class ActorController : Controller
     {
         private readonly ApplicationDbContext context;
@@ -25,6 +27,7 @@ namespace Cinema.Controllers
         }
 
         //Add Actor
+        [Authorize(Roles = "Admin")]
         public IActionResult Add()
         {
             ViewBag.Movies = context.MovieActors.Include
@@ -42,6 +45,7 @@ namespace Cinema.Controllers
         }
 
         //Update Actor
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(int id)
         {
             var actor = context.Actors
@@ -71,6 +75,7 @@ namespace Cinema.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(int id)
         {
             var actor = context.Actors.Find(id);

@@ -16,18 +16,25 @@
             <tr>
                 <td>@visitor.Name</td>
                 <td>@visitor.Email</td>
-                <td>@string.Join(", ",visitor.Tickets.Select(m=>m.Number).ToList())
-                </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@visitor.Id"
-                       class="btn btn-primary">Edit</a>
-                    <form asp-action="Delete" asp-route-id="@visitor.Id" method="post"
-                          onsubmit="return confirm('Are you sure you want to delete this visitor?');">
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                    </form>
+                    @string.Join(", ",visitor.Tickets.Select(m=>m.Number).ToList())
                 </td>
+                @if (User.IsInRole("Admin"))
+                {
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@visitor.Id"
+                           class="btn btn-primary">Edit</a>
+                        <form asp-action="Delete" asp-route-id="@visitor.Id" method="post"
+                              onsubmit="return confirm('Are you sure you want to delete this visitor?');">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
+                }
             </tr>
         }
     </tbody>
 </table>
-<a asp-action="Add" asp-controller="Visitor" class="btn btn-success">Add New Visitor</a>
+@if (User.IsInRole("Admin"))
+{
+    <a asp-action="Add" asp-controller="Visitor" class="btn btn-success">Add New Visitor</a>
+}
