@@ -36,6 +36,10 @@
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="MovieActor" asp-action="Index">Movie-Actor</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="Identity" 
+                                    asp-page="/Account/Register">Register</a>
+                                </li>
                             }
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Ticket" asp-action="Index">Tickets</a>
@@ -46,9 +50,13 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Place" asp-action="Index">Places</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Visitor" asp-action="Index">Visitors</a>
-                            </li>
+                            @if (User.IsInRole("Cashier") || User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Visitor" asp-action="Index">Visitors</a>
+                                </li>
+                            }
+                         
                         }
                     </ul>
                     <partial name="_LoginPartial" />
