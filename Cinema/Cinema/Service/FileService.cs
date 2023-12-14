@@ -4,35 +4,32 @@ namespace Cinema.Service
 {
     public class FileService : IFileService
     {
-        IWebHostEnvironment _environment;
+        IWebHostEnvironment environment;
 
-        public FileService(IWebHostEnvironment environment)
+        public FileService(IWebHostEnvironment env)
         {
-            this._environment = environment;
+            environment = env;
         }
 
-        public Tuple<int, string> SaveImage
-            (IFormFile imageFile)
+
+        public Tuple<int, string> SaveImage(IFormFile imageFile)
         {
             try
             {
-                var path = this._environment.WebRootPath;
-                var pathFile = Path.Combine(path, "Upload");
-                if (!Directory.Exists(pathFile))
+                var wwwPath = this.environment.WebRootPath;
+                var path = Path.Combine(wwwPath, "Uploads");
+                if (!Directory.Exists(path))
                 {
-                    Directory.CreateDirectory(pathFile);
+                    Directory.CreateDirectory(path);
                 }
 
-                //Check the allowed Extentions
+                // Check the allowed extenstions
                 var ext = Path.GetExtension(imageFile.FileName);
-                var allowedExtentions = new string[]
-                {"jpg","png","jpeg"};
-
-                if (!allowedExtentions.Contains(ext))
+                var allowedExtensions = new string[] { ".jpg", ".png", ".jpeg" };
+                if (!allowedExtensions.Contains(ext))
                 {
-                    string msg = string.Format(
-                        "Only {0} extentions are allowed",
-                        string.Join(", ", allowedExtentions));
+                    string msg = string.Format("Only {0} extensions are allowed",
+                        string.Join(",", allowedExtensions));
                     return new Tuple<int, string>(0, msg);
                 }
                 string uniqueString = Guid.NewGuid().ToString();
@@ -45,8 +42,7 @@ namespace Cinema.Service
             }
             catch (Exception ex)
             {
-
-                return new Tuple<int, string>(0, "Error has occured.");
+                return new Tuple<int, string>(0, "Error has occured");
             }
         }
 
@@ -54,8 +50,8 @@ namespace Cinema.Service
         {
             try
             {
-                var wwwPath = this._environment.WebRootPath;
-                var path = Path.Combine(wwwPath,"Uploads\\", imageFileName);
+                var wwwPath = this.environment.WebRootPath;
+                var path = Path.Combine(wwwPath, "Uploads\\", imageFileName);
                 if (System.IO.File.Exists(path))
                 {
                     System.IO.File.Delete(path);

@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <Folder Include="Views\MovieActor\" />
+    <Folder Include="wwwroot\Uploads\" />
   </ItemGroup>
 
 </Project>

@@ -22,6 +22,13 @@ namespace Cinema.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<ApplicationUser>(entity =>
+            {
+                // Configure other properties...
+                entity.Property(e => e.ProfilePicture).HasMaxLength(255); // Adjust the length as needed
+            });
+
             // Define relationships between entities
             modelBuilder.Entity<Movie>()
                 .HasOne(m => m.Genre)

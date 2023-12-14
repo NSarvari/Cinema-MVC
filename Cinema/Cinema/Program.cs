@@ -1,5 +1,7 @@
 using Cinema.Data;
 using Cinema.Models;
+using Cinema.Service.IService;
+using Cinema.Service;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,6 +20,9 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultUI().AddDefaultTokenProviders();
 builder.Services.AddControllersWithViews();
+
+//Service configurations
+builder.Services.AddScoped<IFileService, FileService>();
 
 var app = builder.Build();
 
