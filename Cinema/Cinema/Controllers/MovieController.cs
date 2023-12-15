@@ -1,5 +1,6 @@
 ﻿using Cinema.Data;
 using Cinema.Models;
+using Cinema.Service.IService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,10 +11,13 @@ namespace Cinema.Controllers
     public class MovieController : Controller
     {
         private readonly ApplicationDbContext context;
+        private readonly IFileService fileService;
 
-        public MovieController(ApplicationDbContext context)
+        public MovieController(ApplicationDbContext context,
+            IFileService fileService)
         {
             this.context = context;
+            this.fileService = fileService;
         }
 
         public IActionResult Index()
@@ -42,6 +46,21 @@ namespace Cinema.Controllers
         [HttpPost]
         public IActionResult Add(Movie movie)
         {
+            if (movie.FileUpload != null)
+            {
+                var fileResult = fileService.SaveImage
+                    (movie.FileUpload);
+                if (fileResult.Item1==1)
+                {
+                    movie.Poster = fileResult.Item2;
+                }
+                else
+                {
+                    ModelState.AddModelError(
+                        string.Empty,fileResult.Item2 );
+                    return View(movie);
+                }
+            }
             context.Movies.Add(movie);
             context.SaveChanges();
             return RedirectToAction("Index");

@@ -37,13 +37,19 @@
         <tbody>
             @foreach (var movie in Model)
             {
-                <tr class="card">
+                <tr class="search">
                     <td class="name">@movie.Title</td>
                     <td class="genre">@movie.Genre.Name</td>
                     @*     <td>@string.Join(", ",movie.MovieActors
                 .Select(a=>a.Actor.FirstName)
                 .ToList())</td>*@
-                    <td><img src="@movie.Poster" alt="@movie.Title" /></td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(movie.Poster))
+                        {
+                            <img style="width:280px;height:400px" 
+                            src="/uploads/@movie.Poster" />
+                        }
+                    </td>
                     <td>@movie.Plot</td>
                     <td>@movie.VisitorRating</td>
                     <td>@movie.ProjectionWeek</td>
@@ -73,13 +79,8 @@
     }
     <script>
         function searchMovies() {
-            // Get the search query from the input field
             var query = document.getElementById("searchInput").value.toLowerCase();
-
-            // Get all the movie elements
-            var movies = document.getElementsByClassName("card");
-
-            // Loop through each movie element and check if the title or genre matches the search query
+            var movies = document.getElementsByClassName("search");
             for (var i = 0; i < movies.length; i++) {
                 var movie = movies[i];
                 var titleElement = movie.getElementsByClassName("name")[0];
@@ -88,7 +89,6 @@
                 var title = titleElement.innerText.toLowerCase();
                 var genre = genreElement.innerText.toLowerCase();
 
-                // If the movie's title or genre contains the search query, display it; otherwise, hide it
                 if (title.includes(query) || genre.includes(query)) {
                     movie.style.display = "table-row";
                 } else {
@@ -97,10 +97,8 @@
             }
         }
 
-        // Add an event listener to the search input field
         var searchInput = document.getElementById("searchInput");
         searchInput.addEventListener("keyup", function () {
-            // Call the searchMovies function
             searchMovies();
         });
     </script>
