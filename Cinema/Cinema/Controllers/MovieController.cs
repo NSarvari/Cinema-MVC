@@ -1,8 +1,11 @@
 ﻿using Cinema.Data;
 using Cinema.Models;
+using Cinema.Service;
 using Cinema.Service.IService;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cinema.Controllers
@@ -52,7 +55,8 @@ namespace Cinema.Controllers
                     (movie.FileUpload);
                 if (fileResult.Item1==1)
                 {
-                    movie.Poster = fileResult.Item2;
+                    movie.FileName = movie.Title;
+                    movie.FileName = fileResult.Item2;
                 }
                 else
                 {
@@ -65,6 +69,7 @@ namespace Cinema.Controllers
             context.SaveChanges();
             return RedirectToAction("Index");
         }
+
 
         //Update Movie
         [Authorize(Roles = "Admin")]
@@ -91,9 +96,23 @@ namespace Cinema.Controllers
         [HttpPost]
         public IActionResult Edit(Movie movie)
         {
-                context.Movies.Update(movie);
-                context.SaveChanges();
-                return RedirectToAction("Index");
+            if (movie.FileUpload != null)
+            {
+                var fileResult = fileService.SaveImage(movie.FileUpload);
+                if (fileResult.Item1 == 1)
+                {
+                    movie.FileName = fileResult.Item2;
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, fileResult.Item2);
+                    return View(movie);
+                }
+            }
+
+            context.Movies.Update(movie);
+            context.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         [HttpPost]

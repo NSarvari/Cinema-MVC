@@ -14,8 +14,7 @@ namespace Cinema.Models
         //Upload File
         [NotMapped]
         public IFormFile FileUpload { get; set; }
-        public string Poster { get; set; }
-
+        public string? FileName { get; set; }
         public string Plot { get; set; }
         public double VisitorRating { get; set; }
         public DateTime ProjectionWeek { get; set; }

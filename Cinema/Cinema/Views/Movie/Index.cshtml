@@ -1,4 +1,6 @@
 ﻿@model IEnumerable<Cinema.Models.Movie>
+@using System.IO
+
 <html>
 <head>
     <style>
@@ -43,13 +45,53 @@
                     @*     <td>@string.Join(", ",movie.MovieActors
                 .Select(a=>a.Actor.FirstName)
                 .ToList())</td>*@
+                    @*  <td>
+                @if (!string.IsNullOrEmpty(movie.FileName))
+                {
+                string filePath = $"/uploads/{movie.FileName}";
+                <img style="width: 280px; height: 400px" src="@filePath" />
+                }
+                </td>*@
+
                     <td>
-                        @if (!string.IsNullOrEmpty(movie.Poster))
+                        @if (!string.IsNullOrEmpty(movie.FileName))
                         {
-                            <img style="width:280px;height:400px" 
-                            src="/uploads/@movie.Poster" />
+                            if (movie.FileName.Contains(".pdf"))
+                            {
+                                <embed src="/uploads/@movie.FileName" type="application/pdf" 
+                                width="280" height="400">
+                            }
+                            else if (movie.FileName.Contains(".doc") || movie.FileName.Contains(".docx") || movie.FileName.Contains(".pptx"))
+                            {
+                                <a href="/uploads/@movie.FileName" target="_blank">View Document</a>
+                            }
+                            else if (movie.FileName.Contains(".mp4"))
+                            {
+                                <video width="320" height="240" controls>
+                                    <source src="movie.mp4" type="video/mp4">
+                                </video>
+                            }
+                            else if (movie.FileName.Contains(".mp3"))
+                            {
+                                <audio controls>
+                                    <source src="horse.mp3" type="audio/mpeg">
+                                </audio>
+                            }
+                            else if (movie.FileName.Contains(".jpg") || movie.FileName.Contains(".jpeg") || movie.FileName.Contains(".png"))
+                            {
+                                <img style="width:280px;height:400px" src="/uploads/@movie.FileName" />
+                            }
+                            else
+                            {
+                                <p>The site does not support this type of file.</p>
+                            }
+                        }
+                        else
+                        {
+                            <p>Invalid file path</p>
                         }
                     </td>
+
                     <td>@movie.Plot</td>
                     <td>@movie.VisitorRating</td>
                     <td>@movie.ProjectionWeek</td>
