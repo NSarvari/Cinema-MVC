@@ -26,10 +26,13 @@ namespace Cinema.Controllers
 
         public IActionResult Index()
         {
-            List<ApplicationUser> users = _userManager.Users.ToList();
+            ApplicationUser currentUser = _userManager.GetUserAsync(User).Result;
+            List<ApplicationUser> allUsers = _userManager.Users.ToList();
+            List<ApplicationUser> otherUsers = allUsers.Where(u => u.Id != currentUser.Id).ToList();
 
-            return View(users);
+            return View(otherUsers);
         }
+
 
         // Action to show a form to create a new user
         public IActionResult CreateUser()
