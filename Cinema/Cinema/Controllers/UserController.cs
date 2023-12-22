@@ -5,19 +5,30 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Cinema.Data;
 using Cinema.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Cinema.Controllers
 {
     [Authorize(Roles = "Admin")]
-    public class UsersController : Controller
+    public class UserController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly ApplicationDbContext _dbContext;
 
-        public UsersController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        public UserController(UserManager<ApplicationUser> userManager, 
+            RoleManager<IdentityRole> roleManager, ApplicationDbContext dbContext)
         {
             _userManager = userManager;
             _roleManager = roleManager;
+            _dbContext = dbContext;
+        }
+
+        public IActionResult Index()
+        {
+            List<ApplicationUser> users = _userManager.Users.ToList();
+
+            return View(users);
         }
 
         // Action to show a form to create a new user
@@ -58,6 +69,22 @@ namespace Cinema.Controllers
             // If ModelState is not valid, redisplay the form
             ViewBag.Roles = _roleManager.Roles.Where(r => r.Name != Roles.Admin.ToString()).ToList();
             return View(model);
+        }
+
+        // Inside UsersController class
+        [HttpPost]
+        public IActionResult Delete(string id)
+        {
+            var user = _dbContext.Users.Find(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            _dbContext.Users.Remove(user);
+            _dbContext.SaveChanges();
+            return RedirectToAction("Index");
         }
     }
 }

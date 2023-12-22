@@ -109,6 +109,17 @@ namespace Cinema.Controllers
                     return View(movie);
                 }
             }
+            else
+            {
+                // No new file uploaded, keep the old file name
+                var existingMovie = context.Movies.AsNoTracking()
+                    .FirstOrDefault(m => m.Id == movie.Id);
+                if (existingMovie != null)
+                {
+                    movie.FileName = existingMovie.FileName;
+                }
+            }
+
 
             context.Movies.Update(movie);
             context.SaveChanges();
