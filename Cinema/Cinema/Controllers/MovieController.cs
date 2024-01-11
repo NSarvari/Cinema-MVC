@@ -1,11 +1,8 @@
 ﻿using Cinema.Data;
 using Cinema.Models;
-using Cinema.Service;
 using Cinema.Service.IService;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cinema.Controllers
@@ -23,13 +20,27 @@ namespace Cinema.Controllers
             this.fileService = fileService;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int page =1,int pageSize = 2)
         {
+            //Validate page and pageSize value
+            page = Math.Max(1, page);
+            pageSize = Math.Max(1, pageSize);
+            //Calculate the position to skip based on the page and pageSize
+            var position = (page - 1) * pageSize;
+
             var movies = context.Movies
             .Include(m => m.Genre)
             .Include(m => m.MovieActors)
             .Include(m => m.Tickets)
+            .OrderBy(m=> m.Id)//Use appropriate property for ordering
+            .Skip(position)
+            .Take(pageSize)
             .ToList();
+
+            ViewBag.Page = page;
+            ViewBag.PageSize = pageSize;
+            ViewBag.TotalPages = (int)Math.Ceiling
+                ((double)context.Movies.Count() / pageSize);
 
             return View(movies);
         }

@@ -17,6 +17,21 @@
 </head>
 <body>
     <h2>Movies List</h2>
+    @{
+        var totalPages = ViewBag.TotalPages;
+        var currentPage = ViewBag.CurrentPage;
+        var pageSize = ViewBag.PageSize;
+    }
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            @for (int i = 1; i <= totalPages; i++)
+            {
+                <li class="page-item @(i==currentPage ? "active":"")">
+                    <a class="page-link" href="@Url.Action("Index",new {page = i,pageSize})">@i</a>
+                </li>
+            }
+        </ul>
+    </nav>
     <input type="text" id="searchInput" placeholder="Search by title or genre..." />
     <table class="table">
         <thead>
@@ -58,8 +73,8 @@
                         {
                             if (movie.FileName.Contains(".pdf"))
                             {
-                                <embed src="/uploads/@movie.FileName" type="application/pdf" 
-                                width="280" height="400">
+                                <embed src="/uploads/@movie.FileName" type="application/pdf"
+                                       width="280" height="400">
                             }
                             else if (movie.FileName.Contains(".doc") || movie.FileName.Contains(".docx") || movie.FileName.Contains(".pptx"))
                             {
