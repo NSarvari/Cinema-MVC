@@ -26,7 +26,7 @@
         <ul class="pagination">
             @for (int i = 1; i <= totalPages; i++)
             {
-                <li class="page-item @(i==currentPage ? "active":"")">
+                <li class="page-item @(i==currentPage ? "active":"")" style="background-color:blue">
                     <a class="page-link" href="@Url.Action("Index",new {page = i,pageSize})">@i</a>
                 </li>
             }
@@ -146,6 +146,15 @@
                 var title = titleElement.innerText.toLowerCase();
                 var genre = genreElement.innerText.toLowerCase();
 
+                // Bold the searched word in the title
+                var boldTitle = title.replace(new RegExp(query, 'ig'), '<b>$&</b>');
+                titleElement.innerHTML = boldTitle;
+
+                // Bold the searched word in the genre
+                var boldGenre = genre.replace(new RegExp(query, 'ig'), '<b>$&</b>');
+                genreElement.innerHTML = boldGenre;
+
+                // Check for inclusion and set display property
                 if (title.includes(query) || genre.includes(query)) {
                     movie.style.display = "table-row";
                 } else {
@@ -159,5 +168,6 @@
             searchMovies();
         });
     </script>
+
 </body>
 </html>
